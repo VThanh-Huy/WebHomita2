@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Homita.Models.SanPham>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    var role = Session["VaiTro"] as string;
+    bool canEdit = (role == "Admin" || role == "NhanVien");
+}
+@if (canEdit)
+{
+    <p>
+        @Html.ActionLink("Thêm sản phẩm mới", "Create")
+    </p>
+}
+<div>
+    <h2>Danh mục</h2>
+    <ul>
+        <li><a>Món nổi bật</a></li>
+        <li><a>Trà sữa</a></li>
+        <li><a>Trà trái cây</a></li>
+        <li><a>Nước ép</a></li>
+    </ul>
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>Mã SP</th>
+        <th>Tên SP</th>
+        <th>Giá</th>
+        <th>Size</th>
+        <th>Hình ảnh</th>
+        <th>Loại SP</th>
+        @if (canEdit)
+        {
+            <th>Thao tác</th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaSP</td>
+            <td>@item.TenSP</td>
+            <td>@item.Gia</td>
+            <td>@item.Size</td>
+            <td>
+                <img src="@Url.Content(item.HinhAnh)" alt="@item.TenSP" width="100" />
+            </td>
+            <td>@item.LoaiSanPham.TenLoaiSP</td>
+            @if (canEdit)
+            {
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.MaSP }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.MaSP }) |
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.MaSP })
+                </td>
+            }
+        </tr>
+    }
+</table>

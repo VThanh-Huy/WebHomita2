@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e639320a3e514b19b7adaac6d4d53598" Name="Diagram1">
+        <EntityTypeShape EntityType="TRA_SUAModel.ChiTietDonHang" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.ChiTietGioHang" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.DonHang" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.GioHang" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.KhachHang" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.LoaiSanPham" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.NhanVien" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.SanPham" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.TaiKhoan" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TRA_SUAModel.ThamSo" Width="1.5" PointX="5.75" PointY="6.875" IsExpanded="true" />
+        <AssociationConnector Association="TRA_SUAModel.FK__ChiTietDon__MaDH__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__ChiTietDon__MaSP__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__ChiTietGi__MaGio__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__ChiTietGio__MaSP__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__DonHang__MaKH__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__DonHang__MaNV__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__GioHang__MaKH__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__KhachHang__MaTK__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__SanPham__MaLoaiS__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="TRA_SUAModel.FK__NhanVien__MaTK__412EB0B6" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
