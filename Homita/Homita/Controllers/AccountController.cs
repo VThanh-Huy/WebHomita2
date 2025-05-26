@@ -24,18 +24,28 @@ namespace WebTraSua.Controllers
         public ActionResult Login(string Email, string Password)
         {
             var user = db.TaiKhoan
-                         .FirstOrDefault(u => u.TenDangNhap.Trim() == Email.Trim() && u.MatKhau.Trim() == Password);
+                         .FirstOrDefault(u => u.Email.Trim() == Email.Trim() && u.MatKhau.Trim() == Password);
 
             if (user != null)
             {
                 Session["UserName"] = user.TenDangNhap;
                 Session["VaiTro"] = user.VaiTro;
-                return RedirectToAction("Index", "Home");
+
+                if (user.VaiTro.ToLower() == "admin")
+                {
+                    return RedirectToAction("Index", "AdminHome"); 
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home"); 
+                }
             }
 
-            ViewBag.Error = "Sai tài khoản hoặc mật khẩu!";
-            return RedirectToAction("Index", "Home"); // hoặc quay lại trang login
+            TempData["LoginError"] = "Sai tài khoản hoặc mật khẩu!";
+            TempData["ShowLoginModal"] = true;
+            return RedirectToAction("Index", "Home");
         }
+
 
 
         [HttpGet]
@@ -68,7 +78,7 @@ namespace WebTraSua.Controllers
                     MaTK = newMaTK,
                     Email = model.Email,
                     TenDangNhap = model.TenDangNhap,
-                    MatKhau = model.MatKhau, // Lưu ý: Nên mã hóa mật khẩu
+                    MatKhau = model.MatKhau, 
                     VaiTro = model.VaiTro
                 };
                 db.TaiKhoan.Add(taiKhoan);
@@ -109,7 +119,7 @@ namespace WebTraSua.Controllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(model);

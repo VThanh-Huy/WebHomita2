@@ -21,7 +21,7 @@ namespace Homita.Models.Helper
                 .Select(t => t.MaTK)
                 .FirstOrDefault();
 
-            return GenerateNewCode("nd", lastMa);
+            return GenerateNewCode("TK", lastMa);
         }
 
         public string GenerateNewMaKH()
@@ -31,7 +31,7 @@ namespace Homita.Models.Helper
                 .Select(k => k.MaKH)
                 .FirstOrDefault();
 
-            return GenerateNewCode("nd", lastMa);
+            return GenerateNewCode("TK", lastMa);
         }
 
         public string GenerateNewMaNV()
@@ -57,7 +57,7 @@ namespace Homita.Models.Helper
                 }
             }
 
-            return $"{prefix}{nextNumber.ToString("D3")}"; // Format: TK001, KH001, etc.
+            return $"{prefix}{nextNumber.ToString("D3")}"; 
         }
     }
 }

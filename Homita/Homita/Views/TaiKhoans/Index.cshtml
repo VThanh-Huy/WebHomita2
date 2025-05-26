@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Homita.Models.TaiKhoan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <h4>Email</h4>
+        </th>
+        <th>
+            <h4>Tên đăng nhập</h4>
+        </th>
+        <th>
+            <h4>Mật khẩu</h4>
+        </th>
+        <th>
+            <h4>Vai trò</h4>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenDangNhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatKhau)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaiTro)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaTK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaTK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaTK })
+        </td>
+    </tr>
+}
+
+</table>
