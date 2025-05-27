@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Homita.Models.SanPham>
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="search section-padding">
+    <div class="container">
+        <!-- Form Tìm Kiếm -->
+        <!-- Hiển thị sản phẩm -->
+        <div class="row mt-4">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-12 col-md-6 col-lg-3 mb-4">
+                        <div class="card h-100">
+                            @*<img src="@Url.Content("~/Images/product/" + (item.AnhSP ?? "default.jpg"))" class="card-img-top" alt="Ảnh sản phẩm @item.TenSP" />*@
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@item.TenSP</h5>
+                                <p class="card-text">Mã sản phẩm: @item.MaSP</p>
+                                <p class="card-text">Giá: @item.Gia</p>
+                            </div>
+
+                            <div class="card-footer text-center">
+                                @*<a href="@Url.Action("Details", "SanPham64131122", new { id = item.MaSP })" class="btn btn-danger btn-sm">Xem chi tiết</a>*@
+                                <a href="@Url.Action("AddCart", "Cart", new { MaSP = item.MaSP, strURL = Request.Url.ToString() })" class="btn btn-primary btn-sm cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-danger">Không có sản phẩm nào để hiển thị.</p>
+            }
+        </div>
+    </div>
+</section>

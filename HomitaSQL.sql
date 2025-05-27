@@ -10,7 +10,7 @@ CREATE TABLE LoaiSanPham (
 );
 INSERT INTO LoaiSanPham (MaLoaiSP, TenLoaiSP) VALUES
 ('LSP01', N'Trà sữa'),
-('LSP02', N'Trà trái cây'),
+('LSP02', N'Trà trái cây'),				
 ('LSP03', N'Nước ép'),
 ('LSP04', N'Topping'),
 ('LSP05', N'Bánh ngọt');
@@ -31,6 +31,7 @@ INSERT INTO SanPham (MaSP, TenSP, Gia, Size, HinhAnh, MaLoaiSP) VALUES
 ('SP03', N'Nước ép cam', 28000, 'M', N'cam.jpg', 'LSP03'),
 ('SP04', N'Thạch dừa', 5000, 'S', N'thachdua.jpg', 'LSP04'),
 ('SP05', N'Bánh su kem', 15000, 'M', N'sukem.jpg', 'LSP05');
+
 
 CREATE TABLE TaiKhoan (
     MaTK VARCHAR(20) PRIMARY KEY,
@@ -88,8 +89,6 @@ INSERT INTO NhanVien (MaNV, HoTen, Email, MatKhau, MaTK) VALUES
 ('NV03', N'Trần Quốc Bảo', 'quocbao@gmail.com', 'nvquocbao', 'nd04'),
 ('NV04', N'Đặng Gia Hân', 'giahan@gmail.com', 'nvGiaHan', 'nd05'),
 ('NV05', N'Lý Khánh Duy', 'khanhduy@gmail.com', 'nv234567', 'nd10');
-
-
 GO
 -- 5. Bảng GioHang
 CREATE TABLE GioHang (
@@ -135,15 +134,18 @@ CREATE TABLE DonHang (
     PhuongThucThanhToan NVARCHAR(100),
     MaKH VARCHAR(50),
     MaNV VARCHAR(50),
+	MaGioHang VARCHAR(50),
     FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
+	FOREIGN KEY (MaGioHang) REFERENCES GioHang(MaGioHang),
     FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
 );
-INSERT INTO DonHang (MaDH, NgayDat, GioVao, Ca, TongTien, TienKhachDua, TienThoiLai, TrangThai, PhuongThucThanhToan, MaKH, MaNV) VALUES
-('DH01', '2025-05-01', '10:00', 'Sáng', 55000, 60000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH01', 'NV01'),
-('DH02', '2025-05-02', '13:30', 'Chiều', 30000, 30000, 0, N'Đã thanh toán', N'Momo', 'KH02', 'NV02'),
-('DH03', '2025-05-03', '19:00', 'Tối', 42000, 50000, 8000, N'Đã thanh toán', N'Chuyển khoản', 'KH03', 'NV01'),
-('DH04', '2025-05-04', '11:00', 'Sáng', 15000, 20000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH04', 'NV04'),
-('DH05', '2025-05-05', '14:45', 'Chiều', 75000, 100000, 25000, N'Đã thanh toán', N'Momo', 'KH05', 'NV05');
+INSERT INTO DonHang (MaDH, NgayDat, GioVao, Ca, TongTien, TienKhachDua, TienThoiLai, TrangThai, PhuongThucThanhToan, MaKH, MaNV, MaGioHang) 
+VALUES
+('DH01', '2025-05-01', '10:00', 'Sáng', 55000, 60000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH01', 'NV01', 'GH01'),
+('DH02', '2025-05-02', '13:30', 'Chiều', 30000, 30000, 0, N'Đã thanh toán', N'Momo', 'KH02', 'NV02', 'GH02'),
+('DH03', '2025-05-03', '19:00', 'Tối', 42000, 50000, 8000, N'Đã thanh toán', N'Chuyển khoản', 'KH03', 'NV01', 'GH03'),
+('DH04', '2025-05-04', '11:00', 'Sáng', 15000, 20000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH04', 'NV04', 'GH04'),
+('DH05', '2025-05-05', '14:45', 'Chiều', 75000, 100000, 25000, N'Đã thanh toán', N'Momo', 'KH05', 'NV05', 'GH05');
 
 -- 8. Bảng ChiTietDonHang
 CREATE TABLE ChiTietDonHang (
@@ -174,3 +176,13 @@ INSERT INTO ThamSo (MaTS, TenTS, GiaTri) VALUES
 ('TS03', N'Số lượng tồn tối đa', '500'),
 ('TS04', N'Phụ phí topping mặc định', '5000'),
 ('TS05', N'Tỷ lệ thuế VAT', '10%');
+------------------------
+ALTER TABLE DonHang DROP CONSTRAINT FK__DonHang__MaKH__239E4DCF;
+ALTER TABLE DonHang DROP CONSTRAINT FK__DonHang__MaNV__24927208;
+ALTER TABLE ChiTietDonHang DROP CONSTRAINT FK__ChiTietDon__MaDH__276EDEB3;
+ALTER TABLE DonHang DROP CONSTRAINT PK__DonHang__27258661FFBFDA26;
+DROP TABLE DonHang;
+
+ALTER TABLE ChiTietDonHang DROP CONSTRAINT FK__ChiTietDon__MaSP__286302EC;
+ALTER TABLE ChiTietDonHang DROP CONSTRAINT PK__ChiTietD__1E4E40F0A57CE9FF;
+DROP TABLE ChiTietDonHang;
