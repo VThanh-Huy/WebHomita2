@@ -41,6 +41,7 @@ namespace WebTraSua.Controllers
                 Session["UserName"] = user.TenDangNhap;
                 Session["VaiTro"] = user.VaiTro;
 
+<<<<<<< Updated upstream
                 if (user.VaiTro.ToLower() == "admin")
                 {
                     return RedirectToAction("Index", "AdminHome"); 
@@ -49,6 +50,17 @@ namespace WebTraSua.Controllers
                 {
                     return RedirectToAction("Index", "Home"); 
                 }
+=======
+                if(user.VaiTro != "KhachHang")
+                {
+                    var khachang  = db.KhachHang.FirstOrDefault(kh => kh.MaTK == user.MaTK);
+                    if(khachang != null)
+                    {
+                        Session["TaiKhoan"] = khachang.MaTK;
+                    }
+                }
+                return RedirectToAction("Index", "Home");
+>>>>>>> Stashed changes
             }
 
             TempData["LoginError"] = "Sai tài khoản hoặc mật khẩu!";
