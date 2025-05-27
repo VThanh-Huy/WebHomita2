@@ -1,0 +1,92 @@
+﻿@model List<Homita.Models.ViewModel.CartViewModel>
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="cart section-padding">
+    <div class="container">
+        <div class="box">
+            <h1 class="text-center mb-4">THÔNG TIN GIỎ HÀNG</h1>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                decimal sum = 0;
+                int totalQuantity = 0;
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Hình ảnh</th>
+                                <th class="text-center">Tên sản phẩm</th>
+                                <th class="text-center">Đơn giá</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Tổng tiền</th>
+                                <th class="text-center" colspan="2">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var thanhTien = item.ThanhTien;
+                                sum += (int)thanhTien;
+                                totalQuantity += item.SoLuong;
+
+                                <tr>
+                                    <td class="text-center">
+                                        <img class="img-thumbnail" width="100" src="@Url.Content(item.HinhAnh)" alt="@item.TenSP" />
+                                    </td>
+                                    <td class="text-center align-middle">@item.TenSP</td>
+                                    @using (Html.BeginForm("Update", "Cart", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("MaSP", item.MaSP)
+                                        <td class="text-center align-middle">@item.Gia.ToString("N0") ₫</td>
+                                        <td class="text-center align-middle">
+                                            <input type="number" name="txtSoluong" class="form-control w-50 mx-auto" min="1" value="@item.SoLuong" />
+                                        </td>
+                                        <td class="text-center align-middle">@thanhTien.ToString("N0") ₫</td>
+                                        <td class="text-center align-middle">
+                                            <a href="@Url.Action("Delete", "Cart", new { masp = item.MaSP })" class="btn btn-danger btn-sm">Xóa</a>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <input type="submit" class="btn btn-warning btn-sm" value="Cập Nhật" />
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3"></th>
+                                <td class="text-center font-weight-bold">Tổng sản phẩm: @totalQuantity</td>
+                                <td colspan="3" class="text-center text-danger font-weight-bold">Tổng tiền: @sum.ToString("N0") ₫</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="@Url.Action("DeleteAll", "Cart")" class="btn btn-dark">Hủy đơn hàng</a>
+
+                    @if (Session["Taikhoan"] == null || string.IsNullOrEmpty(Session["Taikhoan"].ToString()))
+                    {
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Đặt hàng <i class="fa fa-chevron-right"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Orders", "Cart")" class="btn btn-primary">Đặt hàng <i class="fa fa-chevron-right"></i></a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger text-center">Chưa có sản phẩm nào trong giỏ hàng</div>
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("Index", "SanPhams")" class="btn btn-success">Tiếp tục mua sắm</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>

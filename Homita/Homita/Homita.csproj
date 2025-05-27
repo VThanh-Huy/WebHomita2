@@ -180,12 +180,17 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>ModelHomita.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>ModelHomita.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TaiKhoan.cs">
       <DependentUpon>ModelHomita.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ThamSo.cs">
       <DependentUpon>ModelHomita.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\CartViewModel.cs" />
+    <Compile Include="Models\ViewModel\DetailViewModel.cs" />
     <Compile Include="Models\ViewModel\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

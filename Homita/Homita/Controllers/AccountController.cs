@@ -20,6 +20,16 @@ namespace WebTraSua.Controllers
             maTuDong = new Create_UserID(db);
         }
 
+        public ActionResult Profile()
+        {
+            var session = Session["TaiKhoan"] as KhachHang;
+            if(session != null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View(session);
+        }
+
         [HttpPost]
         public ActionResult Login(string Email, string Password)
         {

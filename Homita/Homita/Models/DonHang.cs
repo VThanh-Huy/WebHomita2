@@ -31,10 +31,12 @@ namespace Homita.Models
         public string PhuongThucThanhToan { get; set; }
         public string MaKH { get; set; }
         public string MaNV { get; set; }
+        public string MaGioHang { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHang { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         public virtual NhanVien NhanVien { get; set; }
+        public virtual GioHang GioHang { get; set; }
     }
 }
