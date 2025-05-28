@@ -12,6 +12,6 @@ namespace Homita.Models.ViewModel
         public SanPham SanPham { get; set; }
 
         public IEnumerable<SanPham> SanPhamCungLoai { get; set; }
-        public IEnumerable<SanPham> HinhAnh {  get; set; }
+        public IEnumerable<SanPham> HinhAnhs {  get; set; }
     }
 }

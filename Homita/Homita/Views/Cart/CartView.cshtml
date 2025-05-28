@@ -39,7 +39,7 @@
                                     <td class="text-center align-middle">@item.TenSP</td>
                                     @using (Html.BeginForm("Update", "Cart", FormMethod.Post))
                                     {
-                                        @Html.Hidden("MaSP", item.MaSP)
+                                        @Html.Hidden("masp", item.MaSP)
                                         <td class="text-center align-middle">@item.Gia.ToString("N0") ₫</td>
                                         <td class="text-center align-middle">
                                             <input type="number" name="txtSoluong" class="form-control w-50 mx-auto" min="1" value="@item.SoLuong" />
@@ -67,17 +67,9 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <a href="@Url.Action("DeleteAll", "Cart")" class="btn btn-dark">Hủy đơn hàng</a>
-
-                    @if (Session["Taikhoan"] == null || string.IsNullOrEmpty(Session["Taikhoan"].ToString()))
-                    {
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <a href="@Url.Action("Orders", "Cart")" class="btn btn-primary">
                             Đặt hàng <i class="fa fa-chevron-right"></i>
-                        </button>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Orders", "Cart")" class="btn btn-primary">Đặt hàng <i class="fa fa-chevron-right"></i></a>
-                    }
+                        </a>
                 </div>
             }
             else

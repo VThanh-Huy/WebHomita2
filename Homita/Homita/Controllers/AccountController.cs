@@ -23,7 +23,7 @@ namespace WebTraSua.Controllers
         public ActionResult Profile()
         {
             var session = Session["TaiKhoan"] as KhachHang;
-            if(session != null)
+            if(session == null)
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -33,40 +33,43 @@ namespace WebTraSua.Controllers
         [HttpPost]
         public ActionResult Login(string Email, string Password)
         {
-            var user = db.TaiKhoan
-                         .FirstOrDefault(u => u.Email.Trim() == Email.Trim() && u.MatKhau.Trim() == Password);
+            // Tìm tài khoản bằng Email hoặc TenDangNhap cùng với mật khẩu đúng
+            var user = db.TaiKhoan.FirstOrDefault(u =>
+                (u.Email.Trim() == Email.Trim() || u.TenDangNhap.Trim() == Email.Trim())
+                && u.MatKhau.Trim() == Password);
 
             if (user != null)
             {
                 Session["UserName"] = user.TenDangNhap;
                 Session["VaiTro"] = user.VaiTro;
 
-<<<<<<< Updated upstream
+                if (user.VaiTro.ToLower() == "khachhang")
+                {
+                    var khachhang = db.KhachHang.FirstOrDefault(kh => kh.MaTK == user.MaTK);
+                    if (khachhang != null)
+                    {
+                        Session["TaiKhoan"] = khachhang;
+                        System.Diagnostics.Debug.WriteLine("Login thành công, khách hàng: " + khachhang.HoTen);
+                    }
+                }
+
                 if (user.VaiTro.ToLower() == "admin")
                 {
-                    return RedirectToAction("Index", "AdminHome"); 
+                    return RedirectToAction("Index", "AdminHome");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home"); 
+                    return RedirectToAction("Index", "Home");
                 }
-=======
-                if(user.VaiTro != "KhachHang")
-                {
-                    var khachang  = db.KhachHang.FirstOrDefault(kh => kh.MaTK == user.MaTK);
-                    if(khachang != null)
-                    {
-                        Session["TaiKhoan"] = khachang.MaTK;
-                    }
-                }
-                return RedirectToAction("Index", "Home");
->>>>>>> Stashed changes
             }
 
             TempData["LoginError"] = "Sai tài khoản hoặc mật khẩu!";
             TempData["ShowLoginModal"] = true;
             return RedirectToAction("Index", "Home");
         }
+
+
+
 
 
 

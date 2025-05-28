@@ -31,7 +31,8 @@ namespace Homita.Models.ViewModel
             TenSP = sanPham.TenSP;
             HinhAnh = sanPham.HinhAnh;
             Gia = int.Parse(Math.Truncate(sanPham.Gia ?? 0m).ToString());
-            SoLuong = 1; 
+            SoLuong = 1;
+            MaLoaiSP = sanPham.MaLoaiSP;
         }
 
     }

@@ -130,11 +130,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Controllers\AdminHomeController.cs" />
-=======
     <Compile Include="Controllers\CartController.cs" />
->>>>>>> Stashed changes
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangsController.cs" />
     <Compile Include="Controllers\NhanViensController.cs" />
@@ -286,7 +283,6 @@
     <Content Include="Views\SanPhams\Edit.cshtml" />
     <Content Include="Views\SanPhams\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-<<<<<<< Updated upstream
     <Content Include="Views\TaiKhoans\Create.cshtml" />
     <Content Include="Views\TaiKhoans\Delete.cshtml" />
     <Content Include="Views\TaiKhoans\Details.cshtml" />
@@ -304,11 +300,10 @@
     <Content Include="Views\NhanViens\Details.cshtml" />
     <Content Include="Views\NhanViens\Edit.cshtml" />
     <Content Include="Views\NhanViens\Index.cshtml" />
-=======
     <Content Include="Views\Cart\CartView.cshtml" />
     <Content Include="Views\Cart\Product.cshtml" />
     <Content Include="Views\Cart\Orders.cshtml" />
->>>>>>> Stashed changes
+    <Content Include="Views\Cart\ConfirmOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

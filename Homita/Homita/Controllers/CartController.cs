@@ -45,7 +45,7 @@ namespace Homita.Controllers
         }
 
         //tao ma CTHD
-        private string CreateCTDH()
+         string CreateCTDH()
         {
             var maMax = data.ChiTietDonHang
                             .ToList()
@@ -60,7 +60,8 @@ namespace Homita.Controllers
             }
 
             int number = int.Parse(maMax.Substring(2)) + 1;
-            return "CT" + number.ToString("D3");
+            string maCTDH = "CT" + number.ToString("D3");
+            return maCTDH;
         }
 
 
@@ -182,13 +183,23 @@ namespace Homita.Controllers
         [HttpGet]
         public ActionResult Orders()
         {
-            //kiem tra dang nhap
             if (Session["UserName"] == null)
             {
-                return RedirectToAction("Login", "Account");
+                TempData["LoginRequired"] = "Bạn cần đăng nhập để đặt hàng.";
+                return RedirectToAction("Index", "SanPhams");
             }
 
-            //lay gio hang tu Session
+            string tenDangnhap = Session["UserName"] as string;
+            var taikhoan = data.TaiKhoan.FirstOrDefault(tk => tk.TenDangNhap == tenDangnhap);
+            if (taikhoan == null)
+            {
+                TempData["LoginRequired"] = "Không tìm thấy tài khoản.";
+                return RedirectToAction("Index", "SanPhams");
+            }
+
+            var khachhang = data.KhachHang.FirstOrDefault(tk => tk.MaTK == taikhoan.MaTK);
+            ViewBag.kh = khachhang;
+
             List<CartViewModel> lst = GetCartView();
             ViewBag.Tongsoluong = TotalItems();
             ViewBag.Tongtien = TotalPrice();
@@ -196,31 +207,40 @@ namespace Homita.Controllers
             return View(lst);
         }
 
+
         //xay dung chuc nang dat hang
         [HttpPost]
         public ActionResult Orders(FormCollection collection)
         {
+            if (Session["UserName"] == null)
+                return RedirectToAction("Login", "Account");
+
+            // Lấy giỏ hàng
+            List<CartViewModel> lst = GetCartView();
+            if (lst == null || lst.Count == 0)
+                return RedirectToAction("CartView");
+
             //lay tai khoang dang nhap
             string tenDangnhap = Session["UserName"].ToString();
             var taikhoan = data.TaiKhoan.FirstOrDefault(tk => tk.TenDangNhap == tenDangnhap);
-
+            var khachhang = data.KhachHang.FirstOrDefault(kh => kh.MaTK == taikhoan.MaTK);
+            var nhanvien = data.NhanVien.FirstOrDefault(nv => nv.MaTK == taikhoan.MaTK);
             //tao don hang
             DonHang ddh = new DonHang();
             ddh.MaDH = CreateHD();
-            ddh.MaKH = taikhoan.MaTK;
+            ddh.MaKH = khachhang?.MaKH;
+            ddh.MaNV = nhanvien?.MaNV;
+            ddh.NgayDat = DateTime.Now;
+            ddh.GioVao = DateTime.Now.TimeOfDay;
             ddh.NgayDat = DateTime.Now;
             ddh.TrangThai = "Chờ xác nhận";
             ddh.TongTien = (int)TotalPrice();
-            ddh.PhuongThucThanhToan = collection["PhuongThucThanhToan"]; // nếu có
+            ddh.TienKhachDua = 0;
+            ddh.TienThoiLai = 0;
+            ddh.PhuongThucThanhToan = collection["Phương thức thanh toán"]; 
             data.DonHang.Add(ddh);
 
-            //lay gio hang tu session
-            List<CartViewModel> lst = GetCartView();
-            //check gio hang null ko
-            if (lst == null || lst.Count == 0)
-            {
-                return RedirectToAction("CartView");
-            }
+            
 
             foreach (var items in lst)
             {
@@ -242,6 +262,11 @@ namespace Homita.Controllers
 
             return RedirectToAction("ConfirmOrder", "Cart");
 
+        }
+
+        public ActionResult ConfirmOrder()
+        {
+            return View();
         }
     }
 }
