@@ -21,13 +21,13 @@ namespace Homita.Controllers
 
             if (string.IsNullOrEmpty(id))
             {
-                // Hiển thị tất cả sản phẩm nếu không truyền id
                 sanPhamList = db.SanPham.ToList();
             }
             else
             {
                 // Chỉ hiển thị sản phẩm theo mã
                 sanPhamList = db.SanPham.Where(sp => sp.MaSP == id).ToList();
+                
             }
 
             return View(sanPhamList);
@@ -40,6 +40,9 @@ namespace Homita.Controllers
                           .OrderByDescending(c => c.MaCTGH)
                           .Select(c => c.MaCTGH)
                           .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(maxId))
+                return "CTGH001";
 
             if (string.IsNullOrEmpty(maxId))
                 return "CTGH001";
