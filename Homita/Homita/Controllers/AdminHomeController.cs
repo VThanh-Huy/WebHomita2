@@ -10,7 +10,7 @@ namespace Homita.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["VaiTro"] == null || Session["VaiTro"].ToString() != "Admin")
+            if (Session["VaiTro"] == null || Session["VaiTro"].ToString() != "Admin" )
             {
                 return RedirectToAction("Login", "Account");
             }

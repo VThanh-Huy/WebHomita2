@@ -7,7 +7,7 @@ namespace Homita.Models.ViewModel
 {
     public class DetailViewModel
     {
-        public TRA_SUAEntities1 data = new TRA_SUAEntities1();
+        public TRA_SUAEntities data = new TRA_SUAEntities();
 
         public SanPham SanPham { get; set; }
 

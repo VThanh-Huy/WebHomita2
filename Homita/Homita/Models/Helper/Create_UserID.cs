@@ -7,9 +7,9 @@ namespace Homita.Models.Helper
 {
     public class Create_UserID
     {
-        private readonly TRA_SUAEntities1 _context;
+        private readonly TRA_SUAEntities _context;
 
-        public Create_UserID(TRA_SUAEntities1 context)
+        public Create_UserID(TRA_SUAEntities context)
         {
             _context = context;
         }

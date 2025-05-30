@@ -7,7 +7,7 @@ namespace Homita.Models.ViewModel
 {
     public class CartViewModel
     {
-        private TRA_SUAEntities1 data = new TRA_SUAEntities1();
+        private TRA_SUAEntities data = new TRA_SUAEntities();
 
         public string MaSP { get; set; }
         public string TenSP { get; set; }

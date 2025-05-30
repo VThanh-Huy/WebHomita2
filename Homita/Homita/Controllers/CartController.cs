@@ -11,7 +11,7 @@ namespace Homita.Controllers
 {
     public class CartController : Controller
     {
-        private TRA_SUAEntities1 data = new TRA_SUAEntities1();
+        private TRA_SUAEntities data = new TRA_SUAEntities();
         // GET: Cart
 
         public ActionResult Product(string id)
@@ -44,7 +44,6 @@ namespace Homita.Controllers
             return lst;
         }
 
-        //tao ma CTHD
          string CreateCTDH()
         {
             var maMax = data.ChiTietDonHang
@@ -75,6 +74,7 @@ namespace Homita.Controllers
                             .OrderByDescending(n => n)
                             .FirstOrDefault();
             //kiem tra neu maMax la null hoac rong, tra ve ma hoa don mac dinh
+
             if (string.IsNullOrEmpty(maMax))
             {
                 return "HD001";

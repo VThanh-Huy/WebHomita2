@@ -13,10 +13,10 @@ namespace Homita.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TRA_SUAEntities1 : DbContext
+    public partial class TRA_SUAEntities : DbContext
     {
-        public TRA_SUAEntities1()
-            : base("name=TRA_SUAEntities1")
+        public TRA_SUAEntities()
+            : base("name=TRA_SUAEntities")
         {
         }
     

@@ -31,10 +31,10 @@
                         <a class="nav-link" href="@Url.Action("Index", "SanPhams")">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a href="@Url.Action("Product", "Cart", new { id = "SP01" })" class="btn btn-warning">Product</a>
+                        <a href="@Url.Action("Product", "Cart", new { id = "SP01" })" class="btn">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a href="@Url.Action("CartView", "Cart")" class="btn btn-warning">Xem giỏ hàng</a>
+                        <a href="@Url.Action("CartView", "Cart")" class="btn hover-bg">Xem giỏ hàng</a>
                     </li>
                     @if (Session["UserName"] != null)
                     {

@@ -8,7 +8,7 @@
     bool canEdit = (role == "Admin" || role == "NhanVien");
 }
 
-@if (role == "Admin")
+@if (canEdit)
 {
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
@@ -58,6 +58,7 @@
                         @Html.ActionLink("Chi tiết", "Details", new { id = item.MaSP })
                     </td>
                 }
+
             </tr>
         }
     </table>
