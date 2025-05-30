@@ -10,9 +10,9 @@ using System.Data;
 namespace Homita.Controllers
 {
     public class CartController : Controller
+
     {
-        private TRA_SUAEntities1 data = new TRA_SUAEntities1();
-        // GET: Cart
+        private readonly TRA_SUAEntities1 db = new TRA_SUAEntities1();
 
         public ActionResult Product(string id)
         {
@@ -21,252 +21,211 @@ namespace Homita.Controllers
             if (string.IsNullOrEmpty(id))
             {
                 // Hiển thị tất cả sản phẩm nếu không truyền id
-                sanPhamList = data.SanPham.ToList();
+                sanPhamList = db.SanPham.ToList();
             }
             else
             {
                 // Chỉ hiển thị sản phẩm theo mã
-                sanPhamList = data.SanPham.Where(sp => sp.MaSP == id).ToList();
+                sanPhamList = db.SanPham.Where(sp => sp.MaSP == id).ToList();
             }
 
             return View(sanPhamList);
         }
 
+        // Tạo mã ChiTietGioHang
+        private string CreateCTGH()
+        {
+            var maxId = db.ChiTietGioHang
+                          .OrderByDescending(c => c.MaCTGH)
+                          .Select(c => c.MaCTGH)
+                          .FirstOrDefault();
 
-        public List<CartViewModel> GetCartView()
-        {//lay ben cartview
-            List<CartViewModel> lst = Session["GioHang"] as List<CartViewModel>;
-            if (lst == null)
-            {
-                lst = new List<CartViewModel>();
-                Session["GioHang"] = lst;
-            }
-            return lst;
+            if (string.IsNullOrEmpty(maxId))
+                return "CTGH001";
+
+            int number = int.Parse(maxId.Substring(4)) + 1;
+            return "CTGH" + number.ToString("D3");
         }
 
-        //tao ma CTHD
-         string CreateCTDH()
+        private string CreateGH()
         {
-            var maMax = data.ChiTietDonHang
-                            .ToList()
-                            .Select(n => n.MaCTDH)
-                            .Where(n => n.StartsWith("CT"))
-                            .OrderByDescending(n => n)
-                            .FirstOrDefault();
+            var maxId = db.GioHang
+                          .OrderByDescending(c => c.MaGioHang)
+                          .Select(c => c.MaGioHang)
+                          .FirstOrDefault();
 
-            if (string.IsNullOrEmpty(maMax))
-            {
-                return "CT001";
-            }
+            if (string.IsNullOrEmpty(maxId))
+                return "GH001";
 
-            int number = int.Parse(maMax.Substring(2)) + 1;
-            string maCTDH = "CT" + number.ToString("D3");
-            return maCTDH;
+            int number = int.Parse(maxId.Substring(2)) + 1;
+            return "GH" + number.ToString("D3");
         }
 
-
-        //tao ma hoa don
-        string CreateHD()
+        // Thêm hoặc cập nhật sản phẩm trong giỏ hàng
+        [HttpGet]
+        public ActionResult AddCart(string maSP, string returnUrl)
         {
-            var maMax = data.DonHang
-                            .ToList()
-                            .Select(n => n.MaDH)
-                            .Where(n => n.StartsWith("HD"))
-                            .OrderByDescending(n => n)
-                            .FirstOrDefault();
-            //kiem tra neu maMax la null hoac rong, tra ve ma hoa don mac dinh
-            if (string.IsNullOrEmpty(maMax))
+            var tk = Session["TaiKhoan"] as TaiKhoan;
+            if (tk == null)
             {
-                return "HD001";
+                return RedirectToAction("Login", "Account", new { returnUrl = returnUrl ?? Url.Action("CartView", "Cart") });
             }
-            //tach so va tang them 1
-            int MaDH = int.Parse(maMax.Substring(2)) + 1;
-            //tao ma hoa don moi 
-            string maHoaDon = "HD" + MaDH.ToString("D3");//dam bao ma hoa don co 3 chu so
-            return maHoaDon;
-        }
 
-        //them vao gio hang
-        public ActionResult AddCart(string masp, string strURL)
-        {
-            List<CartViewModel> lst = GetCartView();
-            //kiem tra san pham da co trong gio hang chua
-            CartViewModel sp = lst.Find(n => n.MaSP == masp);
-            if (sp == null)
+            var taiKhoan = db.KhachHang.FirstOrDefault(k => k.MaTK == tk.MaTK);
+            if (taiKhoan == null)
             {
-                sp = new CartViewModel(masp);
-                lst.Add(sp);
-                return Redirect(strURL);
+                return RedirectToAction("Login", "Account", new { returnUrl = returnUrl ?? Url.Action("CartView", "Cart") });
+            }
+
+            var maKH = taiKhoan.MaKH;
+            var sanPham = db.SanPham.Find(maSP);
+            if (sanPham == null)
+            {
+                TempData["ErrorMessage"] = "Sản phẩm không tồn tại.";
+                return RedirectToAction("Index", "SanPhams");
+            }
+
+            var cart = db.GioHang.FirstOrDefault(g => g.MaKH == maKH);
+            if (cart == null)
+            {
+                cart = new GioHang
+                {
+                    MaGioHang = CreateGH(),
+                    MaKH = maKH,
+                    NgayTao = DateTime.Now
+                };
+                db.GioHang.Add(cart);
+                db.SaveChanges();
+            }
+
+            Session["MaGioHang"] = cart.MaGioHang;
+
+            var detail = db.ChiTietGioHang.FirstOrDefault(d => d.MaGioHang == cart.MaGioHang && d.MaSP == maSP);
+            if (detail == null)
+            {
+                detail = new ChiTietGioHang
+                {
+                    MaCTGH = CreateCTGH(),
+                    MaGioHang = cart.MaGioHang,
+                    MaSP = maSP,
+                    SoLuong = 1
+                };
+                db.ChiTietGioHang.Add(detail);
             }
             else
             {
-                sp.SoLuong++;
-                return Redirect(strURL);
+                detail.SoLuong += 1;
             }
-        }
-        //tong so luong
-        private int TotalItems()
-        {
-            int count = 0;
-            List<CartViewModel> lst = Session["GioHang"] as List<CartViewModel>;
-            if (lst != null)
-            {
-                count = lst.Sum(n => n.SoLuong);
-            }
-            return count;
-        }
 
-        //tinh tien
-        private double TotalPrice()
-        {
-            double price = 0;
-            List<CartViewModel> lst = Session["GioHang"] as List<CartViewModel>;
-            if (lst != null)
-            {
-                price = lst.Sum(n => n.ThanhTien);
-            }
-            return price;
-        }
-        //show gio hang
-        public ActionResult CartView()
-        {
-            List<CartViewModel> lst = GetCartView();
-            if (lst.Count == 0)
-            {
-                return RedirectToAction("Index", "SanPhams");
-            }
-            ViewBag.Tongsoluong = TotalItems();
-            ViewBag.TotalPrice = TotalPrice();
-            return View(lst);
-        }
+            db.SaveChanges();
 
-        //update gio hang
-        public ActionResult Update(string masp, FormCollection f)
-        {
-            //lay gio hang
-            List<CartViewModel> lstGiohang = GetCartView();
-            CartViewModel sanpham = lstGiohang.FirstOrDefault(n => n.MaSP == masp);
-            if (sanpham != null && f["txtSoluong"] != null)
+            // Trả về redirect về chính trang hiện tại (returnUrl) hoặc trang mặc định
+            if (!string.IsNullOrEmpty(returnUrl))
             {
-                sanpham.SoLuong = int.Parse(f["txtSoluong"].ToString());
-
+                return Redirect(returnUrl);
             }
-            return RedirectToAction("CartView");
-        }
-
-        //Delete
-        public ActionResult Delete(string masp)
-        {
-            List<CartViewModel> lstGiohang = GetCartView();
-            CartViewModel sanpham = lstGiohang.FirstOrDefault(n => n.MaSP == masp);
-            if (sanpham != null )
-            {
-                lstGiohang.RemoveAll(n => n.MaSP == masp);
-                return RedirectToAction("CartView");
-            }
-            if (lstGiohang.Count == 0)
-            {
-                return RedirectToAction("Index", "SanPhams");
-            }
-            return RedirectToAction("CartView");
-        }
-
-        //Xoa tat ca cac san pham
-        public ActionResult DeleteAll()
-        {
-            //lay gio hang tu session 
-            List<CartViewModel> lst = GetCartView();
-            lst.Clear();
             return RedirectToAction("Index", "SanPhams");
         }
-
-        [HttpGet]
-        public ActionResult Orders()
-        {
-            if (Session["UserName"] == null)
-            {
-                TempData["LoginRequired"] = "Bạn cần đăng nhập để đặt hàng.";
-                return RedirectToAction("Index", "SanPhams");
-            }
-
-            string tenDangnhap = Session["UserName"] as string;
-            var taikhoan = data.TaiKhoan.FirstOrDefault(tk => tk.TenDangNhap == tenDangnhap);
-            if (taikhoan == null)
-            {
-                TempData["LoginRequired"] = "Không tìm thấy tài khoản.";
-                return RedirectToAction("Index", "SanPhams");
-            }
-
-            var khachhang = data.KhachHang.FirstOrDefault(tk => tk.MaTK == taikhoan.MaTK);
-            ViewBag.kh = khachhang;
-
-            List<CartViewModel> lst = GetCartView();
-            ViewBag.Tongsoluong = TotalItems();
-            ViewBag.Tongtien = TotalPrice();
-
-            return View(lst);
-        }
-
-
-        //xay dung chuc nang dat hang
+        //update 
         [HttpPost]
-        public ActionResult Orders(FormCollection collection)
+        public ActionResult Update(string masp, int soluong)
         {
-            if (Session["UserName"] == null)
-                return RedirectToAction("Login", "Account");
+            var maGH = Session["MaGioHang"] as string;
 
-            // Lấy giỏ hàng
-            List<CartViewModel> lst = GetCartView();
-            if (lst == null || lst.Count == 0)
-                return RedirectToAction("CartView");
-
-            //lay tai khoang dang nhap
-            string tenDangnhap = Session["UserName"].ToString();
-            var taikhoan = data.TaiKhoan.FirstOrDefault(tk => tk.TenDangNhap == tenDangnhap);
-            var khachhang = data.KhachHang.FirstOrDefault(kh => kh.MaTK == taikhoan.MaTK);
-            var nhanvien = data.NhanVien.FirstOrDefault(nv => nv.MaTK == taikhoan.MaTK);
-            //tao don hang
-            DonHang ddh = new DonHang();
-            ddh.MaDH = CreateHD();
-            ddh.MaKH = khachhang?.MaKH;
-            ddh.MaNV = nhanvien?.MaNV;
-            ddh.NgayDat = DateTime.Now;
-            ddh.GioVao = DateTime.Now.TimeOfDay;
-            ddh.NgayDat = DateTime.Now;
-            ddh.TrangThai = "Chờ xác nhận";
-            ddh.TongTien = (int)TotalPrice();
-            ddh.TienKhachDua = 0;
-            ddh.TienThoiLai = 0;
-            ddh.PhuongThucThanhToan = collection["Phương thức thanh toán"]; 
-            data.DonHang.Add(ddh);
-
-            
-
-            foreach (var items in lst)
+            if (!string.IsNullOrEmpty(maGH))
             {
-                ChiTietDonHang ct = new ChiTietDonHang();
-                ct.MaCTDH = CreateCTDH();
-                ct.MaDH = ddh.MaDH;
-                ct.MaSP = items.MaSP;
-                ct.SoLuong = items.SoLuong;
-                ct.DonGia = (int)items.Gia;
-
-                data.ChiTietDonHang.Add(ct);
-
+                var ctgh = db.ChiTietGioHang.FirstOrDefault(c => c.MaGioHang == maGH && c.MaSP == masp);
+                if (ctgh != null)
+                {
+                    ctgh.SoLuong = soluong;
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                // Giỏ hàng cho khách (session)
+                var guestCart = Session["GuestCart"] as List<CartViewModel>;
+                var item = guestCart?.FirstOrDefault(i => i.MaSP == masp);
+                if (item != null)
+                {
+                    item.SoLuong = soluong;
+                }
             }
 
-            data.SaveChanges();
-
-            //Xoa gio hang sau khi dat\
-            Session["GioHang"] = null;
-
-            return RedirectToAction("ConfirmOrder", "Cart");
-
+            return RedirectToAction("CartView");
         }
 
-        public ActionResult ConfirmOrder()
+        //delete
+        public ActionResult Delete(string masp)
         {
-            return View();
+            var maGH = Session["MaGioHang"] as string;
+
+            if (!string.IsNullOrEmpty(maGH))
+            {
+                var ctgh = db.ChiTietGioHang.FirstOrDefault(c => c.MaGioHang == maGH && c.MaSP == masp);
+                if (ctgh != null)
+                {
+                    db.ChiTietGioHang.Remove(ctgh);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                var guestCart = Session["GuestCart"] as List<CartViewModel>;
+                guestCart?.RemoveAll(i => i.MaSP == masp);
+            }
+
+            return RedirectToAction("CartView");
         }
+
+        //delete all
+        public ActionResult DeleteAll()
+        {
+            var maGH = Session["MaGioHang"] as string;
+
+            if (!string.IsNullOrEmpty(maGH))
+            {
+                var chiTietList = db.ChiTietGioHang.Where(c => c.MaGioHang == maGH).ToList();
+                db.ChiTietGioHang.RemoveRange(chiTietList);
+                db.SaveChanges();
+            }
+            else
+            {
+                Session["GuestCart"] = new List<CartViewModel>();
+            }
+
+            return RedirectToAction("CartView");
+        }
+
+
+
+        // Hiển thị giỏ hàng
+        public ActionResult CartView()
+        {
+            var maGH = Session["MaGioHang"] as string;
+
+            if (!string.IsNullOrEmpty(maGH))
+            {
+                var entities = db.ChiTietGioHang
+                                 .Where(c => c.MaGioHang == maGH)
+                                 .ToList();  // Lấy dữ liệu ra khỏi LINQ to Entities
+
+                var items = entities.Select(c => new CartViewModel(c)).ToList();
+
+                ViewBag.TotalQty = items.Sum(i => i.SoLuong);
+                ViewBag.Total = items.Sum(i => i.ThanhTien);
+                return View(items);
+            }
+            else
+            {
+                var guestCart = Session["GuestCart"] as List<CartViewModel> ?? new List<CartViewModel>();
+
+                ViewBag.TotalQty = guestCart.Sum(i => i.SoLuong);
+                ViewBag.Total = guestCart.Sum(i => i.ThanhTien);
+                return View(guestCart);
+            }
+        }
+
+
     }
 }

@@ -8,6 +8,7 @@ using System.Web.Services.Description;
 using Homita.Models;
 using Homita.Models.Helper;
 using Homita.Models.ViewModel;
+using Microsoft.Ajax.Utilities;
 
 namespace WebTraSua.Controllers
 {
@@ -22,56 +23,62 @@ namespace WebTraSua.Controllers
 
         public ActionResult Profile()
         {
-            var session = Session["TaiKhoan"] as KhachHang;
-            if(session == null)
+            var taiKhoan = Session["TaiKhoan"] as TaiKhoan;
+            if (taiKhoan == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            return View(session);
+
+            // Nếu muốn hiển thị thông tin khách hàng
+            var khachHang = db.KhachHang.FirstOrDefault(k => k.MaTK == taiKhoan.MaTK);
+            if (khachHang == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View(khachHang);
+        }
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
         }
 
+
         [HttpPost]
-        public ActionResult Login(string Email, string Password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string tendangnhap, string Matkhau)
         {
-            // Tìm tài khoản bằng Email hoặc TenDangNhap cùng với mật khẩu đúng
-            var user = db.TaiKhoan.FirstOrDefault(u =>
-                (u.Email.Trim() == Email.Trim() || u.TenDangNhap.Trim() == Email.Trim())
-                && u.MatKhau.Trim() == Password);
-
-            if (user != null)
+            var taiKhoan = db.TaiKhoan.FirstOrDefault(t => t.TenDangNhap == tendangnhap && t.MatKhau == Matkhau);
+            if (taiKhoan != null)
             {
-                Session["UserName"] = user.TenDangNhap;
-                Session["VaiTro"] = user.VaiTro;
+                Session["TaiKhoan"] = taiKhoan;
 
-                if (user.VaiTro.ToLower() == "khachhang")
+                // Lấy khách hàng tương ứng với tài khoản
+                var khachHang = db.KhachHang.FirstOrDefault(k => k.MaTK == taiKhoan.MaTK);
+                if (khachHang != null)
                 {
-                    var khachhang = db.KhachHang.FirstOrDefault(kh => kh.MaTK == user.MaTK);
-                    if (khachhang != null)
+                    // Lấy giỏ hàng của khách hàng nếu có
+                    var gioHang = db.GioHang.FirstOrDefault(g => g.MaKH == khachHang.MaKH);
+                    if (gioHang != null)
                     {
-                        Session["TaiKhoan"] = khachhang;
-                        System.Diagnostics.Debug.WriteLine("Login thành công, khách hàng: " + khachhang.HoTen);
+                        Session["MaGioHang"] = gioHang.MaGioHang;
+                    }
+                    else
+                    {
+                        // Nếu chưa có giỏ hàng, có thể tạo mới hoặc không làm gì
+                        Session["MaGioHang"] = null;
                     }
                 }
 
-                if (user.VaiTro.ToLower() == "admin")
-                {
-                    return RedirectToAction("Index", "AdminHome");
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home"); // hoặc trang bạn muốn chuyển đến sau khi login thành công
             }
-
-            TempData["LoginError"] = "Sai tài khoản hoặc mật khẩu!";
-            TempData["ShowLoginModal"] = true;
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                ViewBag.ErrorMessage = "Sai tên đăng nhập hoặc mật khẩu!";
+                return View();
+            }
         }
-
-
-
-
-
 
         [HttpGet]
         public ActionResult Register()
