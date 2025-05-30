@@ -9,11 +9,11 @@
 <h1 class="text-center my-4">THÔNG TIN GIỎ HÀNG</h1>
 
 @{
-    var sum = 0;
+    decimal sum = 0;
 }
 
 <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
+    @*<table class="table table-bordered table-hover align-middle">
         <thead class="table-secondary">
             <tr>
                 <th style="width:120px;">Hình ảnh</th>
@@ -27,7 +27,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                var total = (int)item.Gia * item.SoLuong;
+                var total = item.Gia * item.SoLuong;
                 <tr>
                     <td>
                         <img src="@Url.Content("~/Content/images/" + item.HinhAnh)" alt="Ảnh sản phẩm" style="max-width:100px; max-height:100px; object-fit:contain;" />
@@ -40,16 +40,17 @@
                         <a href="/Cart/Product" class="btn btn-sm btn-secondary">Trở về giỏ hàng</a>
                     </td>
                 </tr>
-                sum += total;
+                sum += (decimal)total;
             }
         </tbody>
+
         <tfoot>
             <tr>
                 <th colspan="4" class="text-end">Tổng tiền:</th>
                 <th colspan="2" style="color:red; font-weight:bold;">@String.Format("{0:N0}", sum) VNĐ</th>
             </tr>
         </tfoot>
-    </table>
+    </table>*@
 </div>
 
 <h2 class="text-center my-4">THÔNG TIN ĐẶT HÀNG</h2>
@@ -63,21 +64,42 @@
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary(true)
-            <tr>
-                <td><strong>Họ tên khách hàng:</strong></td>
-                <td>@kh.HoTen</td>
-            </tr>
-            <tr>
-                <td><strong>Địa chỉ:</strong></td>
-                <td>@kh.DiaChi</td>
-            </tr>
-            <tr>
-                <td><strong>Điện thoại:</strong></td>
-                <td>@kh.SDT</td>
-            </tr>
+            if (kh != null)
+            {
+                <tr>
+                    <td><strong>Họ tên khách hàng:</strong></td>
+                    <td>@kh.HoTen</td>
+                </tr>
+                <tr>
+                    <td><strong>Địa chỉ:</strong></td>
+                    <td>@kh.DiaChi</td>
+                </tr>
+                <tr>
+                    <td><strong>Điện thoại:</strong></td>
+                    <td>@kh.SDT</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-danger">Chưa có thông tin khách hàng.</td>
+                </tr>
+            }
             <tr>
                 <td><strong>Ngày đặt:</strong></td>
                 <td>@DateTime.Now.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <td><strong>Phương thức thanh toán:</strong></td>
+                <td>
+                    <!-- name không nên có dấu, sửa thành "PhuongThucThanhToan" -->
+                    <select name="PhuongThucThanhToan" class="form-select" required>
+                        <option value="">-- Chọn phương thức --</option>
+                        <option value="Tiền mặt">Tiền mặt</option>
+                        <option value="Chuyển khoản">Chuyển khoản</option>
+                        <option value="Thanh toán online">Thanh toán online</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td></td>

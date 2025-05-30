@@ -55,7 +55,8 @@ VALUES
 ('nd07','vanan@gmail.com', 'khachhang1', 'kh012345', 'KhachHang'),
 ('nd08','honghanh@gmail.com', 'khachhang1', 'kh012345', 'KhachHang'),
 ('nd09','nhatquang@gmail.com', 'khachhang1', 'kh012345', 'KhachHang'),
-('nd011','minhtuan@gmail.com', 'khachhang1', 'kh012345', 'KhachHang');
+('nd011','minhtuan@gmail.com', 'khachhang1', 'kh012345', 'KhachHang'),
+('nd012','nhulap.nt2019@gmail.com', 'khachhang3', '123', 'KhanhHang');
 
 -- 3. Bảng KhachHang 
 CREATE TABLE KhachHang (
@@ -71,7 +72,8 @@ INSERT INTO KhachHang (MaKH, HoTen, SDT, DiaChi, MaTK) VALUES
 ('KH02', N'Lê Ngọc Mai','0907654321', N'Ninh Hòa', 'nd06'),
 ('KH03', N'Nguyễn Văn An','0911122334', N'Cam Ranh', 'nd07'),
 ('KH04', N'Trịnh Hồng Hạnh','0923456789', N'Vạn Ninh', 'nd08'),
-('KH05', N'Hồ Nhật Quang','0938765432', N'Diên Khánh', 'nd09');
+('KH05', N'Hồ Nhật Quang','0938765432', N'Diên Khánh', 'nd09'),
+('KH06', N'Trần Như Lập','0907654321', N'Ninh Hòa', 'nd012');
 
 GO
 -- 4. Bảng NhanVien 
@@ -98,11 +100,11 @@ CREATE TABLE GioHang (
     FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH)
 );
 INSERT INTO GioHang (MaGioHang, NgayTao, MaKH) VALUES
-('GH01', '2025-05-01', 'KH01'),
-('GH02', '2025-05-02', 'KH02'),
-('GH03', '2025-05-03', 'KH03'),
-('GH04', '2025-05-04', 'KH04'),
-('GH05', '2025-05-05', 'KH05');
+('GH001', '2025-05-01', 'KH01'),
+('GH002', '2025-05-02', 'KH02'),
+('GH003', '2025-05-03', 'KH03'),
+('GH004', '2025-05-04', 'KH04'),
+('GH005', '2025-05-05', 'KH05');
 GO
 -- 6. Bảng ChiTietGioHang
 CREATE TABLE ChiTietGioHang (
@@ -115,11 +117,12 @@ CREATE TABLE ChiTietGioHang (
 );
 GO
 INSERT INTO ChiTietGioHang (MaCTGH, SoLuong, MaGioHang, MaSP) VALUES
-('CTGH01', 2, 'GH01', 'SP01'),
-('CTGH02', 1, 'GH01', 'SP04'),
-('CTGH03', 1, 'GH02', 'SP02'),
-('CTGH04', 3, 'GH03', 'SP03'),
-('CTGH05', 2, 'GH04', 'SP05');
+('CTGH001', 2, 'GH001', 'SP01'),
+('CTGH002', 1, 'GH001', 'SP04'),
+('CTGH003', 1, 'GH002', 'SP02'),
+('CTGH004', 3, 'GH003', 'SP03'),
+('CTGH005', 2, 'GH004', 'SP05');
+
 
 -- 7. Bảng DonHang
 CREATE TABLE DonHang (
@@ -141,11 +144,11 @@ CREATE TABLE DonHang (
 );
 INSERT INTO DonHang (MaDH, NgayDat, GioVao, Ca, TongTien, TienKhachDua, TienThoiLai, TrangThai, PhuongThucThanhToan, MaKH, MaNV, MaGioHang) 
 VALUES
-('DH01', '2025-05-01', '10:00', 'Sáng', 55000, 60000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH01', 'NV01', 'GH01'),
-('DH02', '2025-05-02', '13:30', 'Chiều', 30000, 30000, 0, N'Đã thanh toán', N'Momo', 'KH02', 'NV02', 'GH02'),
-('DH03', '2025-05-03', '19:00', 'Tối', 42000, 50000, 8000, N'Đã thanh toán', N'Chuyển khoản', 'KH03', 'NV01', 'GH03'),
-('DH04', '2025-05-04', '11:00', 'Sáng', 15000, 20000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH04', 'NV04', 'GH04'),
-('DH05', '2025-05-05', '14:45', 'Chiều', 75000, 100000, 25000, N'Đã thanh toán', N'Momo', 'KH05', 'NV05', 'GH05');
+('HD001', '2025-05-01', '10:00', N'Sáng', 55000, 60000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH01', 'NV01', 'GH001'),
+('HD002', '2025-05-02', '13:30', N'Chiều', 30000, 30000, 0, N'Đã thanh toán', N'Momo', 'KH02', 'NV02', 'GH002'),
+('HD003', '2025-05-03', '19:00', N'Tối', 42000, 50000, 8000, N'Đã thanh toán', N'Chuyển khoản', 'KH03', 'NV01', 'GH003'),
+('HD004', '2025-05-04', '11:00', N'Sáng', 15000, 20000, 5000, N'Đã thanh toán', N'Tiền mặt', 'KH04', 'NV04', 'GH004'),
+('HD005', '2025-05-05', '14:45', N'Chiều', 75000, 100000, 25000, N'Đã thanh toán', N'Momo', 'KH05', 'NV05', 'GH005');
 
 -- 8. Bảng ChiTietDonHang
 CREATE TABLE ChiTietDonHang (
@@ -158,11 +161,11 @@ CREATE TABLE ChiTietDonHang (
     FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP)
 );
 INSERT INTO ChiTietDonHang (MaCTDH, SoLuong, DonGia, MaDH, MaSP) VALUES
-('CTDH01', 2, 25000, 'DH01', 'SP01'),
-('CTDH02', 1, 5000, 'DH01', 'SP04'),
-('CTDH03', 1, 30000, 'DH02', 'SP02'),
-('CTDH04', 2, 21000, 'DH03', 'SP03'),
-('CTDH05', 1, 15000, 'DH04', 'SP05');
+('CT001', 2, 25000, 'HD001', 'SP01'),
+('CT002', 1, 5000, 'HD001', 'SP04'),
+('CT003', 1, 30000, 'HD002', 'SP02'),
+('CT004', 2, 21000, 'HD003', 'SP03'),
+('CT005', 1, 15000, 'HD004', 'SP05');
 
 -- 9. Bảng ThamSo
 CREATE TABLE ThamSo (
@@ -186,3 +189,11 @@ INSERT INTO ThamSo (MaTS, TenTS, GiaTri) VALUES
 --ALTER TABLE ChiTietDonHang DROP CONSTRAINT FK__ChiTietDon__MaSP__286302EC;
 --ALTER TABLE ChiTietDonHang DROP CONSTRAINT PK__ChiTietD__1E4E40F0A57CE9FF;
 --DROP TABLE ChiTietDonHang;
+DELETE FROM ChiTietDonHang;
+DELETE FROM DonHang;
+
+DELETE FROM TaiKhoan;
+DELETE FROM NhanVien;
+DELETE FROM KhachHang;
+DELETE FROM GioHang;
+DELETE FROM ChiTietGioHang;

@@ -1,0 +1,49 @@
+﻿@model Homita.Models.KhachHang
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="Profile-in-form section-padding">
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Thông tin tài khoản</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover table-bordered">
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="width: 30%;">Mã Khách Hàng</th>
+                            <td>@Model.MaKH</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Họ tên</th>
+                            <td>@Model.HoTen</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>@Model.TaiKhoan.Email</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Địa chỉ</th>
+                            <td>@Model.DiaChi</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Số điện thoại</th>
+                            <td>@Model.SDT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-end">
+                @*<a href="@Url.Action("EditInfo", "NguoiDung64131122")" class="btn btn-warning ms-2">
+                    <i class="fas fa-edit"></i> Cập nhật thông tin
+                </a>*@
+                <a href="@Url.Action("LogOut", "Account")" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
