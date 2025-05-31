@@ -1,128 +1,449 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model dynamic
+@{
+    ViewBag.Title = "Trang chủ";
+
+
 }
 
+<style>
+    #bannerCarousel {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    .carousel img {
+        width: 100%;
+        height: 50vh
+    }
+
+    .owl-dots {
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 12px;
+        margin-left: 90px;
+    }
+
+        .owl-dots button {
+            background: #198754; /* Bootstrap xanh lá */
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+            .owl-dots button.active, .owl-dots button:focus {
+                background: #157347;
+                box-shadow: 0 0 0 3px #b6f0d1;
+            }
+
+    .dot-border {
+        display: none;
+    }
+
+    .dot-number {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+        line-height: 36px;
+        letter-spacing: 1px;
+    }
+    /* Nút xanh lá custom */
+    .custom-green-btn {
+        background: #198754 !important;
+        color: #eaffd0 !important;
+        border: 2px solid #b6f0d1 !important;
+        transition: color 0.2s, border-color 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .custom-green-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: #f2f2f2;
+            z-index: 1;
+            transition: width 0.35s cubic-bezier(.4,0,.2,1);
+        }
+
+        .custom-green-btn:hover, .custom-green-btn:focus {
+            color: #198754 !important;
+            border-color: #198754 !important;
+        }
+
+            .custom-green-btn:hover::before, .custom-green-btn:focus::before {
+                width: 100%;
+            }
+
+        .custom-green-btn span {
+            position: relative;
+            z-index: 2;
+            transition: color 0.2s;
+        }
+
+    .menu {
+        color: #116333;
+        font-size: 40px;
+        line-height: 1.2;
+        margin: 0 0 30px;
+        text-transform: uppercase;
+        position: relative;
+        display: inline-block;
+    }
+
+        .menu::after {
+            content: "";
+            display: block;
+            height: 4px;
+            width: 60px; /* Điều chỉnh cho vừa tới chữ E */
+            background: #116333;
+            border-radius: 2px;
+            margin-top: 6px;
+        }
+
+    .trasua::after {
+        content: "";
+        display: block;
+        height: 4px;
+        width: 60px; /* Điều chỉnh cho vừa tới chữ E */
+        background: #116333;
+        border-radius: 2px;
+        margin-top: 6px;
+    }
+
+    .price {
+        white-space: nowrap;
+    }
+</style>
+
 <main>
-    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Banner -->
+    <div id="bannerCarousel" class="carousel slide owl-theme owl-loaded" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item ">
+            <div class="carousel-item">
                 <img src="~/Content/images/slide1.jpg" class="d-block w-100" alt="Banner 1">
             </div>
-            <div class="carousel-item ">
+            <div class="carousel-item">
                 <img src="~/Content/images/slide2.jpg" class="d-block w-100" alt="Banner 2">
             </div>
             <div class="carousel-item active">
                 <img src="~/Content/images/slide4.jpg" class="d-block w-100" alt="Banner 3">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-    <div>
-        <h1 class="mt-4 ">Menu</h1>
-        <div class="row ">
-            <h2 class="text-success ">Trà sữa</h2>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto ">
-                    <img src="~/Content/images/card1.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto">
-                    <img src="~/Content/images/card2.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto">
-                    <img src="~/Content/images/card1.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto">
-                    <img src="~/Content/images/card2.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+        <div class="owl-dots">
+            <button role="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" aria-label="Slide 1"><span class="dot-border"></span><span class="dot-number">01</span></button>
+            <button role="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1" aria-label="Slide 2"><span class="dot-border"></span><span class="dot-number">02</span></button>
+            <button role="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2" aria-label="Slide 3"><span class="dot-border"></span><span class="dot-number">03</span></button>
         </div>
+        @*<button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>*@
+    </div>
 
-        <hr />
+    <!-- Menu -->
+    <div class="menu-section px-4 px-md-5">
+        <div>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <h1 class="fw-bold mb-0 menu">MENU</h1>
+                <a href="@Url.Action("DanhMucSanPham", "LoaiSanPhams")" class="btn fw-bold custom-green-btn"><span>XEM THÊM TẤT CẢ SẢN PHẨM</span></a>
 
-        <div class="row">
-            <h2 class="mt-5 text-success">Trà trái cây</h2>
+            </div>
 
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto ">
-                    <img src="~/Content/images/traoi.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
+            <h2 class="text-success mt-3 trasua">TRÀ SỮA</h2>
+            <div class="row">
+                <!-- Sản phẩm 1: Matcha Đậu Đỏ -->
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100 text-center">
+                        <img src="~/Content/images/matcha_daudo.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Matcha Đậu Đỏ" />
+                        <div class="card-body bg-success text-white">
+                            <h5 class="fw-bold text-uppercase">Matcha Đậu Đỏ</h5>
+                            <p class="text-warning fw-bold text-uppercase">Trà sữa matcha đậu đỏ</p>
+                            <div class="row fw-bold">
+                                <div class="mb-1 col-6 col-md-4">
+                                    M
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                </div>
+                                <div class="mb-1 col-6 col-md-4">
+                                    L
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">27,000 đ</span></p>
+                                </div>
+                                <div class="mb-0 col-6 col-md-4">
+                                    XL
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">37,000 đ</span></p>
+                                </div>
+                            </div>
+                            @*<div class="row fw-bold">
+                                <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                <p class="mb-1 col-6 col-md-4"><span class="price">27,000 đ</span></p>
+                                <p class="mb-0 col-6 col-md-4"><span class="price">37,000 đ</span></p>*@
+                            @*<p class="mb-1">M: 22,000 đ</p>
+                                <p class="mb-1">L: 27,000 đ</p>
+                                <p class="mb-0">XL: 37,000 đ</p>*@
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 2: Trà Sữa Truyền Thống -->
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100 text-center">
+                        <img src="~/Content/images/trasua_truyenthong.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Sữa Truyền Thống" />
+                        <div class="card-body bg-success text-white">
+                            <h5 class="fw-bold text-uppercase">Trà Sữa Truyền Thống</h5>
+                            <p class="text-warning fw-bold text-uppercase">Trà sữa matcha đậu đỏ</p>
+                            <div class="row fw-bold">
+                                <div class="mb-1 col-6 col-md-4">
+                                    M
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">15,000 đ</span></p>
+                                </div>
+                                <div class="mb-1 col-6 col-md-4">
+                                    L
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">20,000 đ</span></p>
+                                </div>
+                                <div class="mb-0 col-6 col-md-4">
+                                    XL
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">30,000 đ</span></p>
+                                </div>
+                            </div>
+                            <!--<div class="row fw-bold">-->
+                            @*<p class="mb-1 col-6 col-md-4"><span class="price">15,000 đ</span></p>*@
+                            <!--<p class="mb-1 col-6 col-md-4"><span class="price">20,000 đ</span></p>
+                                <p class="mb-0 col-6 col-md-4"><span class="price">30,000 đ</span></p>
+                            </div>-->
+                            @*<p class="mb-1">M: 15,000 đ</p>
+                                <p class="mb-1">L: 20,000 đ</p>
+                                <p class="mb-0">XL: 30,000 đ</p>*@
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 3: Trà Sữa Socola -->
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100 text-center">
+                        <img src="~/Content/images/chocolate_oreo.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Sữa Socola" />
+                        <div class="card-body bg-success text-white">
+                            <h5 class="fw-bold text-uppercase">Trà Sữa Socola</h5>
+                            <p class="text-warning fw-bold text-uppercase">Homita Original Milk Tea</p>
+                            <div class="row fw-bold">
+                                <div class="mb-1 col-6 col-md-4">
+                                    M
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">17,000 đ</span></p>
+                                </div>
+                                <div class="mb-1 col-6 col-md-4">
+                                    L
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                </div>
+                                <div class="mb-0 col-6 col-md-4">
+                                    XL
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">32,000 đ</span></p>
+                                </div>
+                            </div>
+                            @*<div class="row fw-bold">
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">17,000 đ</span></p>
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">32,000 đ</span></p>
+                                </div>*@
+                            @*<p class="mb-1">M: 17,000 đ</p>
+                                <p class="mb-1">L: 22,000 đ</p>
+                                <p class="mb-0">XL: 32,000 đ</p>*@
+                            @*</div>*@
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 4: Trà Sữa Khoai Môn -->
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="card h-100 text-center">
+                        <img src="~/Content/images/tra_sua_khoai_mon_20250526124302.png" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Sữa Khoai Môn" />
+                        <div class="card-body bg-success text-white">
+                            <h5 class="fw-bold text-uppercase">Trà Sữa Khoai Môn</h5>
+                            <p class="text-warning fw-bold text-uppercase">Taro Milk Tea</p>
+                            <div class="row fw-bold">
+                                <div class="mb-1 col-6 col-md-4">
+                                    M
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">17,000 đ</span></p>
+                                </div>
+                                <div class="mb-1 col-6 col-md-4">
+                                    L
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                </div>
+                                <div class="mb-0 col-6 col-md-4">
+                                    XL
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">32,000 đ</span></p>
+                                </div>
+                            </div>
+                            @*<div class="row fw-bold">
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">17,000 đ</span></p>
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">22,000 đ</span></p>
+                                    <p class="mb-0 col-6 col-md-4"><span class="price">32,000 đ</span></p>
+                                </div>*@
+                            @*<p class="mb-1">M: 17,000 đ</p>
+                                <p class="mb-1">L: 22,000 đ</p>
+                                <p class="mb-0">XL: 32,000 đ</p>*@
+                            @*</div>*@
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="text-success mt-5 trasua">TRÀ TRÁI CÂY</h2>
+                <div class="row">
+                    <!-- Sản phẩm 1: Trà Đào -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100 text-center">
+                            <img src="~/Content/images/tra_dao.png" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Đào" />
+                            <div class="card-body bg-success text-white">
+                                <h5 class="fw-bold text-uppercase">Trà Đào</h5>
+                                <p class="text-warning fw-bold text-uppercase">Peach Tea</p>
+                                <div class="row fw-bold">
+                                    <div class="mb-1 col-6 col-md-4">
+                                        M
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">18,000 đ</span></p>
+                                    </div>
+                                    <div class="mb-1 col-6 col-md-4">
+                                        L
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">25,000 đ</span></p>
+                                    </div>
+                                    <div class="mb-0 col-6 col-md-4">
+                                        XL
+                                        <p class="mb-0 col-6 col-md-4"><span class="price">35,000 đ</span></p>
+                                    </div>
+                                </div>
+                                @*<div class="row fw-bold">
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">18,000 đ</span></p>
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">25,000 đ</span></p>
+                                        <p class="mb-0 col-6 col-md-4"><span class="price">35,000 đ</span></p>
+                                    </div>*@
+                                @*<p class="mb-1">M: 18,000 đ</p>
+                                    <p class="mb-1">L: 25,000 đ</p>
+                                    <p class="mb-0">XL: 35,000 đ</p>*@
+                                @*</div>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sản phẩm 2: Trà Cam Nhãn Dầm -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100 text-center">
+                            <img src="~/Content/images/tra_cam_nhan_dam.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Cam Nhãn Dầm" />
+                            <div class="card-body bg-success text-white">
+                                <h5 class="fw-bold text-uppercase">Trà Cam Nhan Đam</h5>
+                                <p class="text-warning fw-bold text-uppercase">Trà cam nha đam</p>
+                                <div class="row fw-bold">
+                                    <div class="mb-1 col-6 col-md-5">
+                                        M
+                                        <p class="mb-1 col-6 col-md-5"><span class="price">22,000 đ</span></p>
+                                    </div>
+                                    <div class="mb-1 col-6 col-md-7">
+                                        L
+                                        <p class="mb-1 col-6 col-md-7"><span class="price">28,000 đ</span></p>
+                                    </div>
+                                </div>
+                                @*<div class="row fw-bold">
+                                        <p class="mb-1 col-6 col-md-5"><span class="price">22,000 đ</span></p>
+                                        <p class="mb-1 col-6 col-md-7"><span class="price">28,000 đ</span></p>
+                                    </div>*@
+                                @*<p class="mb-1">M: 22,000 đ</p>
+                                    <p class="mb-0">L: 28,000 đ</p>*@
+                                @*</div>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sản phẩm 3: Trà Lài Đắc Thơm -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100 text-center">
+                            <img src="~/Content/images/tra_lai_dac_thom.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Lài Đắc Thơm" />
+                            <div class="card-body bg-success text-white">
+                                <h5 class="fw-bold text-uppercase">Trà Lài Đắc Thơm</h5>
+                                <p class="text-warning fw-bold text-uppercase">Trà lài đác thơm</p>
+                                <div class="row fw-bold">
+                                    <p class="mb-1 col-6 col-md-5">M</p>
+                                    <p class="mb-1 col-6 col-md-7">L</p>
+                                </div>
+                                <div class="row fw-bold">
+                                    <p class="mb-1 col-6 col-md-5"><span class="price">22,000 đ</span></p>
+                                    <p class="mb-1 col-6 col-md-7"><span class="price">28,000 đ</span></p>
+                                </div>
+                                @*<p class="mb-1">M: 22,000 đ</p>
+                                    <p class="mb-0">L: 28,000 đ</p>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sản phẩm 4: Trà Xoài Chanh Dây -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100 text-center">
+                            <img src="~/Content/images/tra_xoai_chanh_day.jpg" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Trà Xoài Chanh Dây" />
+                            <div class="card-body bg-success text-white">
+                                <h5 class="fw-bold text-uppercase">Trà Xoài Chanh Dây</h5>
+                                <p class="text-warning fw-bold text-uppercase">Trà xoài chanh dây</p>
+                                <div class="row fw-bold">
+                                    <div class="mb-1 col-6 col-md-4">
+                                        M
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">18,000 đ</span></p>
+                                    </div>
+                                    <div class="mb-1 col-6 col-md-4">
+                                        L
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">25,000 đ</span></p>
+                                    </div>
+                                    <div class="mb-0 col-6 col-md-4">
+                                        XL
+                                        <p class="mb-1 col-6 col-md-4"><span class="price">35,000 đ</span></p>
+                                    </div>
+                                </div>
+                                @*<div class="row fw-bold">
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">18,000 đ</span></p>
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">25,000 đ</span></p>
+                                    <p class="mb-1 col-6 col-md-4"><span class="price">35,000 đ</span></p>*@
+                                <!--</div>-->
+                                @*<p class="mb-1">M: 18,000 đ</p>
+                                    <p class="mb-1">L: 25,000 đ</p>
+                                    <p class="mb-0">XL: 35,000 đ</p>*@
+                                <!--</div>-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto ">
-                    <img src="~/Content/images/tra_dao.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto ">
-                    <img src="~/Content/images/traxoai_cream.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-lg-3 col-6">
-                <div class="card mx-auto">
-                    <img src="~/Content/images/traoi.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                        <a href="#" class="btn btn-success mt-1">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </main>
+
+<script>
+    $(document).ready(function () {
+        // Khi click dot, chuyển slide
+        $('.owl-dots button').on('click', function () {
+            var slideTo = $(this).data('bs-slide-to');
+            $('#bannerCarousel').carousel(slideTo);
+        });
+
+        // Khi chuyển slide, cập nhật class active cho dot
+        $('#bannerCarousel').on('slid.bs.carousel', function () {
+            // Lấy index của .carousel-item.active
+            var index = $('#bannerCarousel .carousel-item.active').index();
+            $('.owl-dots button').removeClass('active');
+            $('.owl-dots button').eq(index).addClass('active');
+        });
+    });
+</script>

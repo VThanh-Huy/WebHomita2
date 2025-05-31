@@ -4,5 +4,45 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+@section styles {
+    <link rel="stylesheet" href="~/Content/css/AdminHomeIndex.css" />
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:70vh;">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold animate-welcome mb-4">
+            Hệ Thống Quản Lý Website Homita
+        </h1>
+        <div class="welcome-underline mx-auto mb-3"></div>
+        <p class="lead text-success animate-fadein">Chúc bạn một ngày làm việc hiệu quả!</p>
+    </div>
+</div>
+
+<style>
+    .animate-welcome {
+        background: linear-gradient(90deg, #0e4f29, #83c343, #0e4f29);
+        background-size: 200% auto;
+        color: #fff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 2.5s linear infinite;
+    }
+
+    .welcome-underline {
+        width: 80px;
+        height: 5px;
+        background: linear-gradient(90deg, #83c343 0%, #0e4f29 100%);
+        border-radius: 3px;
+        animation: underline-grow 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    .animate-fadein {
+        opacity: 0;
+        animation: fadein 1.5s 0.8s forwards;
+    }
+</style>
+
+
+
 

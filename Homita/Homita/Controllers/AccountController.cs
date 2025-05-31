@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using Antlr.Runtime.Misc;
 using Homita.Models;
 using Homita.Models.Helper;
 using Homita.Models.ViewModel;
@@ -47,18 +48,18 @@ namespace WebTraSua.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string tendangnhap, string Matkhau)
+        public ActionResult Login(string loginInfo, string Matkhau)
         {
-            var taiKhoan = db.TaiKhoan.FirstOrDefault(t => t.TenDangNhap == tendangnhap && t.MatKhau == Matkhau);
+            var taiKhoan = db.TaiKhoan.FirstOrDefault(t =>(t.TenDangNhap == loginInfo.Trim() || t.Email.Trim() == loginInfo.Trim())&& t.MatKhau.Trim() == Matkhau);
+
             if (taiKhoan != null)
             {
                 Session["TaiKhoan"] = taiKhoan;
+                Session["VaiTro"] = taiKhoan.VaiTro;
 
-                // Lấy khách hàng tương ứng với tài khoản
                 var khachHang = db.KhachHang.FirstOrDefault(k => k.MaTK == taiKhoan.MaTK);
                 if (khachHang != null)
                 {
-                    // Lấy giỏ hàng của khách hàng nếu có
                     var gioHang = db.GioHang.FirstOrDefault(g => g.MaKH == khachHang.MaKH);
                     if (gioHang != null)
                     {
@@ -66,18 +67,26 @@ namespace WebTraSua.Controllers
                     }
                     else
                     {
-                        // Nếu chưa có giỏ hàng, có thể tạo mới hoặc không làm gì
                         Session["MaGioHang"] = null;
                     }
                 }
 
-                return RedirectToAction("Index", "Home"); // hoặc trang bạn muốn chuyển đến sau khi login thành công
+                // 👉 Chuyển hướng dựa vào vai trò sau khi xử lý xong giỏ hàng
+                if (taiKhoan.VaiTro.ToLower() == "admin" || taiKhoan.VaiTro.ToLower() == "nhanvien")
+                {
+                    return RedirectToAction("Index", "AdminHome");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
                 ViewBag.ErrorMessage = "Sai tên đăng nhập hoặc mật khẩu!";
                 return View();
             }
+
         }
 
         [HttpGet]

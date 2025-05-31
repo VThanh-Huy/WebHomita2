@@ -11,7 +11,7 @@ namespace Homita.Controllers
 {
     public class OrdersController : Controller
     {
-        private TRA_SUAEntities1 data = new TRA_SUAEntities1();
+        private TRA_SUAEntities data = new TRA_SUAEntities();
         // GET: Cart
 
         public List<CartViewModel> GetCartView()

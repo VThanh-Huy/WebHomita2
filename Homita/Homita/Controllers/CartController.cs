@@ -12,8 +12,7 @@ namespace Homita.Controllers
     public class CartController : Controller
 
     {
-        private TRA_SUAEntities data = new TRA_SUAEntities();
-        // GET: Cart
+        private readonly TRA_SUAEntities db = new TRA_SUAEntities();
 
         public ActionResult Product(string id)
         {
@@ -21,13 +20,13 @@ namespace Homita.Controllers
 
             if (string.IsNullOrEmpty(id))
             {
+                // Hiển thị tất cả sản phẩm nếu không truyền id
                 sanPhamList = db.SanPham.ToList();
             }
             else
             {
                 // Chỉ hiển thị sản phẩm theo mã
                 sanPhamList = db.SanPham.Where(sp => sp.MaSP == id).ToList();
-                
             }
 
             return View(sanPhamList);
@@ -44,14 +43,11 @@ namespace Homita.Controllers
             if (string.IsNullOrEmpty(maxId))
                 return "CTGH001";
 
-            if (string.IsNullOrEmpty(maxId))
-                return "CTGH001";
-
             int number = int.Parse(maxId.Substring(4)) + 1;
             return "CTGH" + number.ToString("D3");
         }
 
-         string CreateCTDH()
+        private string CreateGH()
         {
             var maxId = db.GioHang
                           .OrderByDescending(c => c.MaGioHang)
@@ -89,20 +85,17 @@ namespace Homita.Controllers
                 return RedirectToAction("Index", "SanPhams");
             }
 
-        //tao ma hoa don
-        string CreateHD()
-        {
-            var maMax = data.DonHang
-                            .ToList()
-                            .Select(n => n.MaDH)
-                            .Where(n => n.StartsWith("HD"))
-                            .OrderByDescending(n => n)
-                            .FirstOrDefault();
-            //kiem tra neu maMax la null hoac rong, tra ve ma hoa don mac dinh
-
-            if (string.IsNullOrEmpty(maMax))
+            var cart = db.GioHang.FirstOrDefault(g => g.MaKH == maKH);
+            if (cart == null)
             {
-                return "HD001";
+                cart = new GioHang
+                {
+                    MaGioHang = CreateGH(),
+                    MaKH = maKH,
+                    NgayTao = DateTime.Now
+                };
+                db.GioHang.Add(cart);
+                db.SaveChanges();
             }
 
             Session["MaGioHang"] = cart.MaGioHang;

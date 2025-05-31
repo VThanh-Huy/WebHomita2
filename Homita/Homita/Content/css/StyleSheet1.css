@@ -1,42 +1,38 @@
-﻿#bannerCarousel .carousel-item img {
-    width: 100%;
-    height: 50vh ; 
-    background-size:cover;
-}
-
-.navbar-toggler {
-    border-color: white !important; 
+﻿.navbar-toggler {
+    border-color: white !important;
 }
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
+
 /*Header*/
-.form-control{
+.form-control {
     border: 10px
 }
+
 .navbar {
     background-color: #211E1E !important;
 }
+
 body {
+    background-color: #211E1E !important;
 }
 
-h1{
+h1 {
     text-align: center;
     color: blue;
 }
 
 /*Main*/
-.carousel img{
-    width: 100%;
-    height: 30vh
+
+
+.card {
 }
-.card{
-    
-}
+
 .card-img-top {
-    height: 40vh; 
+    height: 40vh;
     width: 25%;
 }
 
@@ -47,7 +43,15 @@ h1{
 .dropdown-menu a {
     color: black !important;
 }
-hr{
+
+hr {
     border: 2px solid black !important;
-    margin-top:5% !important;
+    margin-top: 5% !important;
 }
+
+/* @media (max-width: 768px) {
+    .owl-dots {
+        justify-content: center;
+        margin-left: 0;
+    }
+} */
