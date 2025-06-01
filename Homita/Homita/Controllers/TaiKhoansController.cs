@@ -12,7 +12,7 @@ namespace Homita.Controllers
 {
     public class TaiKhoansController : Controller
     {
-        private TRA_SUAEntities db = new TRA_SUAEntities();
+        private TRA_SUAEntities1 db = new TRA_SUAEntities1();
 
         // GET: TaiKhoans
         public ActionResult Index()
@@ -109,11 +109,23 @@ namespace Homita.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            TaiKhoan taiKhoan = db.TaiKhoan.Find(id);
+            var taiKhoan = db.TaiKhoan.Find(id);
+
+            // Kiểm tra ràng buộc khóa ngoại trước khi xóa
+            var khachHang = db.KhachHang.FirstOrDefault(k => k.MaTK == id);
+            var nhanVien = db.NhanVien.FirstOrDefault(n => n.MaTK == id);
+
+            if (khachHang != null || nhanVien != null)
+            {
+                ModelState.AddModelError("", "Không thể xóa vì tài khoản đang được sử dụng.");
+                return View(taiKhoan);
+            }
+
             db.TaiKhoan.Remove(taiKhoan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

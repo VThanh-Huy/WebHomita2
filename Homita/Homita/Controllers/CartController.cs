@@ -7,12 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 
-namespace Homita.Controllers
+namespace Homita.Controllers    
 {
     public class CartController : Controller
 
     {
-        private readonly TRA_SUAEntities db = new TRA_SUAEntities();
+        private readonly TRA_SUAEntities1 db = new TRA_SUAEntities1();
 
         public ActionResult Product(string id)
         {

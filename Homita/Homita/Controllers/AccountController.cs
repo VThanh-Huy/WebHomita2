@@ -15,7 +15,7 @@ namespace WebTraSua.Controllers
 {
     public class AccountController : Controller
     {
-        private TRA_SUAEntities db = new TRA_SUAEntities();
+        private TRA_SUAEntities1 db = new TRA_SUAEntities1();
         private Create_UserID maTuDong;
         public AccountController()
         {
@@ -71,7 +71,6 @@ namespace WebTraSua.Controllers
                     }
                 }
 
-                // 👉 Chuyển hướng dựa vào vai trò sau khi xử lý xong giỏ hàng
                 if (taiKhoan.VaiTro.ToLower() == "admin" || taiKhoan.VaiTro.ToLower() == "nhanvien")
                 {
                     return RedirectToAction("Index", "AdminHome");

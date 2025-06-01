@@ -7,7 +7,6 @@
     <style>
         body {
             /*            background: linear-gradient(135deg, #eaffd0 0%, #f2f2f2 100%);*/
-            /* hoặc dùng ảnh nền: */
             background: url('/Content/images/leaf-bg.png') no-repeat center center fixed;
             background-size: cover;
         }
@@ -23,7 +22,6 @@
             margin: 0 10px; /* Khoảng cách đều giữa các mục menu */
             position: relative; /* Để tạo hiệu ứng gạch chân bằng ::after */
         }
-            /* Gạch chân xanh lá xuất hiện khi hover/focus/active */
             .nav .nav-link::after {
                 content: '';
                 display: block;
@@ -78,16 +76,19 @@
             <div class="col-2 bg-light border-end ">
                 <ul class="nav flex-column mt-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "AdminHome")">Trang chính</a>
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">Trang chính</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "NhanViens")">Quản lý <br />nhân viên</a>
+                        <a class="nav-link" href="@Url.Action("Index", "NhanViens")">Quản lý nhân viên</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">Quản lý <br />tài khoản</a>
+                        <a class="nav-link" href="@Url.Action("Index", "TaiKhoans")">Quản lý tài khoản</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "SanPhams")">Quản lý <br />sản phẩm</a>
+                        <a class="nav-link" href="@Url.Action("Index", "SanPhams")">Quản lý sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "KhachHangs")">Quản lý khách hàng</a>
                     </li>
                 </ul>
             </div>

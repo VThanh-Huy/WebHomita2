@@ -12,7 +12,7 @@ namespace Homita.Controllers
 {
     public class NhanViensController : Controller
     {
-        private TRA_SUAEntities db = new TRA_SUAEntities();
+        private TRA_SUAEntities1 db = new TRA_SUAEntities1();
 
         // GET: NhanViens
         public ActionResult Index()

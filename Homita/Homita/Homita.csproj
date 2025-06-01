@@ -143,59 +143,50 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietDonHang.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietGioHang.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DonHang.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GioHang.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Helper\Create_UserID.cs" />
     <Compile Include="Models\KhachHang.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoaiSanPham.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelHomita.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHomita.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelHomita.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHomita.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelHomita.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelHomita.edmx</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NhanVien.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaiKhoan.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ThamSo.cs">
-      <DependentUpon>ModelHomita.tt</DependentUpon>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRA_SUA.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRA_SUA.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRA_SUA.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRA_SUA.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRA_SUA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TRA_SUA.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\CartViewModel.cs" />
     <Compile Include="Models\ViewModel\DetailViewModel.cs" />
@@ -263,15 +254,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ModelHomita.Context.tt">
+    <Content Include="Models\TRA_SUA.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelHomita.edmx</DependentUpon>
-      <LastGenOutput>ModelHomita.Context.cs</LastGenOutput>
+      <DependentUpon>TRA_SUA.edmx</DependentUpon>
+      <LastGenOutput>TRA_SUA.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModelHomita.tt">
+    <Content Include="Models\TRA_SUA.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelHomita.edmx</DependentUpon>
-      <LastGenOutput>ModelHomita.cs</LastGenOutput>
+      <DependentUpon>TRA_SUA.edmx</DependentUpon>
+      <LastGenOutput>TRA_SUA.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -280,12 +271,12 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\images\logo.webp" />
-    <EntityDeploy Include="Models\ModelHomita.edmx">
+    <EntityDeploy Include="Models\TRA_SUA.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelHomita.Designer.cs</LastGenOutput>
+      <LastGenOutput>TRA_SUA.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelHomita.edmx.diagram">
-      <DependentUpon>ModelHomita.edmx</DependentUpon>
+    <Content Include="Models\TRA_SUA.edmx.diagram">
+      <DependentUpon>TRA_SUA.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />

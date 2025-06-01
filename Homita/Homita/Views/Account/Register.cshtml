@@ -3,53 +3,52 @@
     ViewBag.Title = "Đăng ký";
 }
 
-<h2>Đăng ký</h2>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-4">Đăng ký</h2>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+            <div class="mb-3">
+                @Html.LabelFor(m => m.TenDangNhap)
+                @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger" })
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.TenDangNhap)
-        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.TenDangNhap)
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.MatKhau)
+                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(m => m.VaiTro, new { Value = "KhachHang" })
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.HoTen)
+                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.SDT)
+                @Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SDT, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.DiaChi)
+                @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+        }
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Email)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.MatKhau)
-        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MatKhau)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.VaiTro)
-        @Html.DropDownListFor(m => m.VaiTro, new SelectList(new[] { "KhachHang", "NhanVien" }), "Chọn vai trò", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.VaiTro)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.HoTen)
-        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.HoTen)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.SDT)
-        @Html.TextBoxFor(m => m.SDT, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.SDT)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.DiaChi)
-        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.DiaChi)
-    </div>
-
-    <button type="submit" class="btn btn-primary">Đăng ký</button>
-}
+</div>

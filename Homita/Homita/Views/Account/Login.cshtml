@@ -5,37 +5,37 @@
 }
 
 
-<section class="sign-in-form section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto col-12">
-                <h1 class="hero-title text-center mb-5">Sign In</h1>
-                <div class="row">
-                    <div class="col-lg-8 col-11 mx-auto">
-                        <!-- Đảm bảo action trong form trỏ tới đúng action của controller -->
-                        <form role="form" method="post" action="@Url.Action("Login", "Account")">
-                            @Html.AntiForgeryToken()
+<div class="d-flex justify-content-center align-items-center min-vh-100 ">
+    <div class="container " >
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow p-4">
+                    <h2 class="text-center mb-4">Đăng nhập</h2>
+                    
+                    <!-- Form đăng nhập -->
+                    <form method="post" action="@Url.Action("Login", "Account")" role="form">
+                        @Html.AntiForgeryToken()
 
-                            <div class="form-floating mb-4 p-0">
-                                <input type="text" name="loginInfo" id="loginInfo" class="form-control" placeholder="Name User" required>
-                                <label for="tendangnhap">Name User</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="loginInfo" id="loginInfo" class="form-control" placeholder="Tên đăng nhập hoặc Email" required />
+                            <label for="loginInfo">Tên đăng nhập hoặc Email</label>
+                        </div>
 
-                            <div class="form-floating p-0">
-                                <input type="password" name="Matkhau" id="password" class="form-control" placeholder="Password" required>
-                                <label for="password">Password</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="Matkhau" id="password" class="form-control" placeholder="Mật khẩu" required />
+                            <label for="password">Mật khẩu</label>
+                        </div>
 
-                            <button type="submit" class="btn custom-btn form-control mt-4 mb-3">
-                                Sign in
-                            </button>
-                            <p class="text-center">Don’t have an account? <a href="@Url.Action("Register", "Account")">Create One</a></p>
-                        </form>
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
 
-                    </div>
+                        <p class="text-center mt-3 mb-0">
+                            Bạn chưa có tài khoản?
+                            <a href="@Url.Action("Register", "Account")" class="text-decoration-none">Đăng ký</a>
+                        </p>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>
-</section>
+</div>
+

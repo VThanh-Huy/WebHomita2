@@ -7,9 +7,9 @@ namespace Homita.Models.Helper
 {
     public class Create_UserID
     {
-        private readonly TRA_SUAEntities _context;
+        private readonly TRA_SUAEntities1 _context;
 
-        public Create_UserID(TRA_SUAEntities context)
+        public Create_UserID(TRA_SUAEntities1 context)
         {
             _context = context;
         }
@@ -31,7 +31,7 @@ namespace Homita.Models.Helper
                 .Select(k => k.MaKH)
                 .FirstOrDefault();
 
-            return GenerateNewCode("TK", lastMa);
+            return GenerateNewCode("KH", lastMa);
         }
 
         public string GenerateNewMaNV()
@@ -41,7 +41,7 @@ namespace Homita.Models.Helper
                 .Select(n => n.MaNV)
                 .FirstOrDefault();
 
-            return GenerateNewCode("nd", lastMa);
+            return GenerateNewCode("NV", lastMa);
         }
 
         private string GenerateNewCode(string prefix, string lastCode)

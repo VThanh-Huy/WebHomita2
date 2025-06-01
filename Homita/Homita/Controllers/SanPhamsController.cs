@@ -13,7 +13,7 @@ namespace Homita.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private TRA_SUAEntities db = new TRA_SUAEntities();
+        private TRA_SUAEntities1 db = new TRA_SUAEntities1();
 
         // GET: SanPhams
         public ActionResult Index()
@@ -103,17 +103,17 @@ namespace Homita.Controllers
             if (ModelState.IsValid)
             {
                 // Nếu người dùng upload ảnh mới
-                if (sanPham.ImageUpload != null && sanPham.ImageUpload.ContentLength > 0)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(sanPham.ImageUpload.FileName);
-                    string extension = Path.GetExtension(sanPham.ImageUpload.FileName);
-                    fileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
-                    string path = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
-                    sanPham.ImageUpload.SaveAs(path);
+                //if (sanPham.ImageUpload != null && sanPham.ImageUpload.ContentLength > 0)
+                //{
+                //    string fileName = Path.GetFileNameWithoutExtension(sanPham.ImageUpload.FileName);
+                //    string extension = Path.GetExtension(sanPham.ImageUpload.FileName);
+                //    fileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
+                //    string path = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
+                //    sanPham.ImageUpload.SaveAs(path);
 
-                    // Cập nhật thuộc tính HinhAnh
-                    sanPham.HinhAnh = "~/Content/Images/" + fileName;
-                }
+                //    // Cập nhật thuộc tính HinhAnh
+                //    sanPham.HinhAnh = "~/Content/Images/" + fileName;
+                //}
 
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
@@ -146,6 +146,7 @@ namespace Homita.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             SanPham sanPham = db.SanPham.Find(id);
+            // Kiểm tra ràng buộc khóa ngoại trước khi xóa
             db.SanPham.Remove(sanPham);
             db.SaveChanges();
             return RedirectToAction("Index");

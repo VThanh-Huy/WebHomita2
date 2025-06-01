@@ -16,9 +16,7 @@
     background-color: #211E1E !important;
 }
 
-body {
-    background-color: #211E1E !important;
-}
+
 
 h1 {
     text-align: center;
@@ -49,9 +47,19 @@ hr {
     margin-top: 5% !important;
 }
 
-/* @media (max-width: 768px) {
-    .owl-dots {
-        justify-content: center;
-        margin-left: 0;
-    }
-} */
+a{
+    text-decoration:none!important;
+
+}
+
+.dmuc-custom h2 {
+    color: black;
+}
+.dmuc-custom a {
+    color: black !important;
+    border-bottom: solid 2px ;
+}
+
+.dmuc-custom a:hover {
+     color: forestgreen !important;
+}

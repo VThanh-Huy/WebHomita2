@@ -5,13 +5,16 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Tài khoản người dùng</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
+        <th>
+            <h4>Mã tài khoản</h4>
+        </th>
         <th>
             <h4>Email</h4>
         </th>
@@ -30,6 +33,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.MaTK)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
@@ -42,9 +48,9 @@
             @Html.DisplayFor(modelItem => item.VaiTro)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaTK }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaTK }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaTK })
+            @Html.ActionLink("Edit", "Edit", new { id = item.MaTK }) |
+            @Html.ActionLink("Details", "Details", new { id = item.MaTK }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MaTK })
         </td>
     </tr>
 }
